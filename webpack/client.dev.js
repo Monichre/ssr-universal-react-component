@@ -31,7 +31,11 @@ module.exports = {
     ]
   },
   devtool: 'eval',
-  entry: path.resolve(__dirname, '../src/index.js'),
+  entry: [
+    'webpack-hot-middleware/client',
+    'react-hot-loader/patch',
+    path.resolve(__dirname, '../src/index.js')
+  ],
   output: {
     // REQUIRED: file and chunk names should match
     filename: '[name].js',
@@ -63,12 +67,10 @@ module.exports = {
       filename: '[name].css',
       chunkFilename: '[id].css'
     }),
-    // NEW
     new webpack.HotModuleReplacementPlugin(),
-    // NEW: for babel plugin
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
+        NODE_ENV: JSON.stringify('development') // This will turn on various development features on in webpack
       }
     })
   ]
