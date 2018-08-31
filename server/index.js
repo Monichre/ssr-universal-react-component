@@ -13,7 +13,7 @@ const publicPath = clientConfig.output.publicPath
 const options = { publicPath, stats: { colors: true } }
 
 app.use(webpackDevMiddleware(compiler, options))
-app.use(webpackHotServerMiddleware)(compiler)
+app.use(webpackHotServerMiddleware(compiler))
 
 app.listen(3000, () => {
   console.log('Listening @ 3000')

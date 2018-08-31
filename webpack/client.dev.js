@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin')
-console.log(ExtractCssChunks)
+
 module.exports = {
   // REQUIRED: webpackHotServerMiddleware is expecting two webpack configs,
   // one with a name 'client', one with a name 'server'.
@@ -42,22 +42,6 @@ module.exports = {
     publicPath: '/static/'
   },
   optimization: {
-    // FOR PRODUCTION
-    // minimizer: [
-    //   new UglifyJSPlugin({
-    //     uglifyOptions: {
-    //       output: {
-    //         comments: false,
-    //         ascii_only: true
-    //       },
-    //       compress: {
-    //         comparisons: false
-    //       }
-    //     }
-    //   })
-    // ],
-    // END
-    // NEEDED BOTH IN PROD AND DEV BUILDS
     runtimeChunk: {
       name: 'bootstrap'
     },
@@ -78,6 +62,14 @@ module.exports = {
       hot: true,
       filename: '[name].css',
       chunkFilename: '[id].css'
+    }),
+    // NEW
+    new webpack.HotModuleReplacementPlugin(),
+    // NEW: for babel plugin
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('development')
+      }
     })
   ]
 }
